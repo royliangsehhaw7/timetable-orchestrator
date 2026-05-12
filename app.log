@@ -1,0 +1,99 @@
+2026-05-12 09:39:11,115 [INFO] [cycle 1] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 09:41:19,031 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-05-12 10:30:26,057 [INFO] [cycle 1] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:30:39,792 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:30:40,080 [INFO] [decision] No proposal in-flight and there are unscheduled courses. Selected the first course from the list, CS201, to dispatch for scheduling. | tokens: request=808 response=176 total=984
+2026-05-12 10:30:42,936 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:31:49,059 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:31:49,073 [INFO] [decision] Course CS201 (Data Structures) requires a lab, benefiting from longer uninterrupted blocks. No existing assignments, so we can choose any slot. To spread across the week, we place it on Wednesday morning. School hours 8-17 with lunch 12-13. We allocate a 2-hour block (typical lecture/lab duration) from 8:00 to 10:00 on Wednesday, avoiding lunch and fitting within school hours. | tokens: request=975 response=511 total=1486
+2026-05-12 10:31:59,376 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:34:13,400 [INFO] [cycle 1] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:34:28,370 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:35:21,911 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:35:29,068 [INFO] [decision] Course CS201 is a lab course requiring 3 hours. No existing assignments. School hours 8-17 with lunch 12-13. To respect lab preference for uninterrupted blocks, allocate a single 3-hour block. Choose Monday 8-11 (start 8, end 11) as it's early in the week and avoids lunch. This spreads load and fits within morning slot. | tokens: request=982 response=428 total=1410
+2026-05-12 10:35:37,140 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:36:28,286 [INFO] [cycle 2] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:36:56,029 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:37:42,276 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:38:21,793 [INFO] [cycle 3] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:38:37,528 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:38:40,345 [INFO] [decision] In-flight proposal for CS201 has timeslot (Monday 8-11) and room R003 assigned, but policy_approved is false with null policy_reason, indicating policy check not yet performed. Lecturer_id is null but not part of decision flow. Therefore, next step is to dispatch policy check. | tokens: request=905 response=486 total=1391
+2026-05-12 10:38:47,613 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:44:01,493 [INFO] [cycle 1] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:44:09,260 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:44:09,481 [INFO] [decision] No active proposal and there are unscheduled courses. Selecting the first course from the list (CS201) to schedule next. | tokens: request=808 response=177 total=985
+2026-05-12 10:44:21,808 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:44:44,577 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:45:21,479 [INFO] [decision] Course CS201 (Data Structures) is a lab course requiring 3 hours. No existing assignments. School hours 8-17 with lunch 12-13. To provide an uninterrupted block suitable for a lab, allocate a 3-hour block within morning or afternoon slots. Chosen Monday 08:00-11:00 to spread early in the week and avoid lunch conflict. | tokens: request=982 response=468 total=1450
+2026-05-12 10:45:32,012 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:45:34,258 [INFO] [cycle 2] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:45:45,555 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:45:53,110 [INFO] [decision] In-flight proposal for CS201 has a timeslot (Monday 8-11) but no room assigned (room_id null). According to decision rules, when a proposal has timeslot but no room, the next action is to dispatch a room. Policy approval is false but room must be assigned before policy check. Retry count is 0, so no failure context needed. | tokens: request=901 response=594 total=1495
+2026-05-12 10:45:58,557 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:46:16,925 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:46:20,525 [INFO] [decision] Course CS201 (Data Structures) requires a lab. Available lab rooms: R003 (Computer Lab A) and R004 (Computer Lab B). No rooms are already confirmed at timeslot Monday 8-11. Both labs are suitable; we select R003 as it is the first available lab room. | tokens: request=1120 response=228 total=1348
+2026-05-12 10:46:30,814 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:46:38,864 [INFO] [cycle 3] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:46:47,801 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:50:34,939 [INFO] [cycle 1] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:50:48,276 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:50:49,780 [INFO] [decision] No proposal in-flight and there are unscheduled courses. Rejection log is empty, so no course has exceeded retry limit. Need to pick the best next course to schedule. Since no priority information is given, we select the first course in the unscheduled list: CS201. We will dispatch CS201 for timeslot assignment. | tokens: request=808 response=253 total=1061
+2026-05-12 10:51:00,074 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:51:11,655 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:51:29,698 [INFO] [decision] Course CS201 is a lab course requiring 3 hours. No existing assignments. To respect lab preference for longer uninterrupted blocks and avoid lunch break, allocate a single 3-hour block on Monday 8-11 (before lunch). This fits within school hours, avoids lunch, and spreads the course early in the week. | tokens: request=982 response=596 total=1578
+2026-05-12 10:51:39,975 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:51:42,069 [INFO] [cycle 2] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:51:52,366 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:52:00,526 [INFO] [decision] Proposal for CS201 has a timeslot (Monday 8-11) but no room assigned. According to decision rules, when proposal has timeslot but no room, we should dispatch a room assignment. No retries yet, rejection log empty. So next action is dispatch_room for course CS201. | tokens: request=905 response=462 total=1367
+2026-05-12 10:52:10,812 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:52:20,776 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:52:20,795 [INFO] [decision] Course CS201 requires a lab (requires_lab: true). Available lab rooms: R003 (Computer Lab A) and R004 (Computer Lab B). No rooms are already confirmed at the timeslot Monday 8-11. Both labs are free. Selected R003 as it is the first suitable lab room, ensuring a lab environment for the Data Structures course. | tokens: request=1124 response=234 total=1358
+2026-05-12 10:52:26,296 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:52:26,307 [INFO] [cycle 3] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:52:36,587 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:52:56,412 [INFO] [decision] In-flight proposal for CS201 has timeslot and room assigned but policy_approved is false with null policy_reason. Lecturer_id is null, indicating policy failure due to missing lecturer. No courses have reached 5 rejections. Therefore we will retry the course selection for CS201, providing failure context about missing lecturer. | tokens: request=909 response=1045 total=1954
+2026-05-12 10:53:06,878 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:53:16,127 [INFO] [decision] Proposal for CS201 has timeslot and room but policy_approved false with null policy_reason and lecturer_id null, indicating missing lecturer. No course has 5+ rejections. According to rules, on policy failure we should retry course selection with failure context about missing lecturer. | tokens: request=1929 response=1695 total=3624
+2026-05-12 10:53:24,772 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:53:35,095 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:53:45,825 [INFO] [cycle 4] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:53:56,115 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:54:05,885 [INFO] [decision] Current in-flight proposal for CS201 has a timeslot (Monday 8-11) but no room assigned. No rejections yet. According to rules, when proposal has timeslot but no room, next action is dispatch_room to assign a room. | tokens: request=908 response=327 total=1235
+2026-05-12 10:54:16,168 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:54:26,653 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:54:46,468 [INFO] [decision] Course CS201 requires a lab room. Available lab rooms are R003 (Computer Lab A) and R004 (Computer Lab B). Both are free at the given timeslot (Monday 8-11). No rooms are already confirmed. Selected R003 as it is the first suitable lab room. | tokens: request=1127 response=208 total=1335
+2026-05-12 10:54:56,762 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:55:06,600 [INFO] [cycle 5] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 10:55:16,902 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:55:19,200 [INFO] [decision] Current in-flight proposal for CS201 has timeslot and room assigned but policy_approved is false with null policy_reason. Since policy was checked and rejected, we need to understand why to fix. Without a specific reason, we will retry the policy check to obtain a reason. No course has reached 5 rejections yet. Therefore next action is to dispatch_policy for CS201 with failure_context indicating previous policy check failed without reason. | tokens: request=912 response=775 total=1687
+2026-05-12 10:55:29,485 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 10:57:13,868 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:06:44,992 [INFO] [cycle 1] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 11:06:57,960 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:07:17,063 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:07:44,680 [INFO] [decision] Course CS201 (Data Structures) is a lab course requiring 3 hours. No existing assignments. To respect lab preference for longer uninterrupted blocks, allocate a single 3-hour block. Avoid lunch break (12-13). Choose Monday 9-12 as it fits within school hours, ends at lunch start, and spreads the course early in the week. | tokens: request=982 response=744 total=1726
+2026-05-12 11:07:54,576 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:07:54,608 [INFO] [cycle 2] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 11:08:03,827 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:08:03,849 [INFO] [decision] In-flight proposal for CS201 has timeslot but no room or lecturer assigned. Policy check returned false with no reason, indicating missing resources. According to rules, when policy_approved is False we should identify responsible worker and dispatch corrective action. Since room_id and lecturer_id are null, the next step is to assign a room. Therefore, choose dispatch_room for CS201. | tokens: request=901 response=601 total=1502
+2026-05-12 11:08:11,316 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:08:21,630 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:09:08,659 [INFO] [decision] Course CS201 requires a lab (requires_lab: true). Available lab rooms: R003 (Computer Lab A) and R004 (Computer Lab B). No rooms are confirmed at the timeslot Monday 9-12. Both labs are free and suitable; we select R003 as it is the first available lab room. | tokens: request=1166 response=1742 total=2908
+2026-05-12 11:09:19,183 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:09:45,788 [INFO] [cycle 3] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 11:09:56,084 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:11:00,831 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:11:18,840 [INFO] [decision] Day Monday is a valid school day. Timeslot 9-12 falls within school hours (8-17) and does not overlap lunch break (12-13) as it ends exactly at lunch start. Room R003 is a lab, matching the course requirement for a lab. All policy rules are satisfied. | tokens: request=1117 response=548 total=1665
+2026-05-12 11:11:21,767 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:11:47,512 [INFO] [cycle 4] unscheduled: ['CS201', 'MA101', 'CS101', 'PH201']
+2026-05-12 11:12:28,020 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:12:57,144 [INFO] [cycle 4] confirmed CS201
+2026-05-12 11:13:18,296 [INFO] [cycle 5] unscheduled: ['MA101', 'CS101', 'PH201']
+2026-05-12 11:13:31,345 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:13:41,557 [INFO] [decision] No in-flight proposal. Unscheduled courses: MA101, CS101, PH201. Rejection log empty, so no course has exceeded retry limit. Selected MA101 as the next course to schedule (first in list). | tokens: request=872 response=223 total=1095
+2026-05-12 11:13:45,705 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:14:49,535 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:15:12,530 [INFO] [cycle 6] unscheduled: ['MA101', 'CS101', 'PH201']
+2026-05-12 11:15:22,851 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 11:15:37,811 [INFO] [decision] Current in-flight proposal for MA101 has a timeslot (Tuesday 10-12) but no room assigned (room_id is null). According to decision rules, when a proposal has timeslot but no room, the next action should be dispatch_room. No rejection log entries for MA101 yet, and policy_approved is false but policy_reason is null because policy check cannot occur without a room. Therefore, we proceed to assign a room. | tokens: request=968 response=602 total=1570
+2026-05-12 11:15:40,151 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"

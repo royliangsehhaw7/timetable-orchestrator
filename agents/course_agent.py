@@ -10,11 +10,13 @@ class CourseAgent(BaseAgent):
     def __init__(self, name: str, agent: Agent):
         super().__init__(name, agent)
 
+    # main agent system_instruction
     def get_instruction(self):
         return f"""
             You are the CourseAgent in a timetable scheduling system. Propose the best timeslot for this course. Return the full proposal with timeslot set.
 
             Rules:
+            - Must follow the allocated hours specified for each course
             - The timeslot must be on a valid school day, within school hours, and not during the lunch break
             - Avoid timeslots already taken by other courses
             - Prefer to spread courses across the week rather than clustering them
@@ -23,7 +25,7 @@ class CourseAgent(BaseAgent):
 
             Call log_decision to explain your reasoning. Then return the proposal with timeslot set.            
         """
-
+    # main agent user instruction
     def get_prompt(self, course: Course, deps: Deps):
         assignments = deps.store.get_assignments()
         
@@ -39,6 +41,7 @@ class CourseAgent(BaseAgent):
 
         """
 
+    # run the agent with wrapper agent prompts and instructions
     async def run(self, course: Course, deps: Deps, failure_reason: str | None = None) -> Any:
         prompt = self.get_prompt(course, deps)
 

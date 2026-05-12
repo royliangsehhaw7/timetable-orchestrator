@@ -31,7 +31,11 @@ class PolicyAgent(BaseAgent):
 
     def get_prompt(self, proposal: Proposal, course: Course, deps: Deps) -> str:
         room = next(r for r in deps.rooms if r.id == proposal.room_id)
-        lecturer = next(l for l in deps.lecturers if l.id == proposal.lecturer_id)
+        # ignore lecturers for now
+        # lecturer = next(l for l in deps.lecturers if l.id == proposal.lecturer_id)
+        # PROMOT Lecturer:
+        #        {json.dumps(lecturer.model_dump(), indent=2)}
+
         return f"""
             Current proposal:
             {json.dumps(proposal.model_dump(), indent=2)}
@@ -42,8 +46,6 @@ class PolicyAgent(BaseAgent):
             Room:
             {json.dumps(room.model_dump(), indent=2)}
 
-            Lecturer:
-            {json.dumps(lecturer.model_dump(), indent=2)}
 
             School policy:
             {json.dumps(deps.policy.model_dump(), indent=2)}

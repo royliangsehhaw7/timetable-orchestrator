@@ -90,7 +90,7 @@ timetable/
 │   ├── lecturer_agent.py
 │   └── policy_agent.py
 ├── control/
-│   └── orchestrator.py
+│   └── coordinator.py
 ├── core/
 │   ├── data_loader.py
 │   ├── deps.py
@@ -714,7 +714,7 @@ class OrchestratorAgent(BaseAgent):
 
 ## 9. Control Flow
 
-**Location**: `control/orchestrator.py`
+**Location**: `control/coordinator.py`
 
 ### 9.1 Startup sequence
 
@@ -732,75 +732,78 @@ class OrchestratorAgent(BaseAgent):
 The loop is a thin executor. The orchestrator LLM drives every decision. Python reads the decision and calls the right worker or store method.
 
 ```python
-MAX_CYCLES = 200
+MAX_CYCLES = 50
 MAX_RETRIES = 5
 
-async def run(deps: Deps, agents: dict) -> dict:
-    cycle = 0
-    in_flight_proposal: Proposal | None = None
+class Coordinator():
+    def __init__(self, agents: dict):
+        self._agents = agents
 
-    while cycle < MAX_CYCLES:
-        cycle += 1
-        logger.info(f"[cycle {cycle}] unscheduled: {deps.store.get_unscheduled_courses()}")
+    async def run(self, deps: Deps) -> None:
+        cycle = 0
+        in_flight_proposal: Proposal | None = None
 
-        decision = await agents["orchestrator"].run(
-            unscheduled   = deps.store.get_unscheduled_courses(),
-            assignments   = deps.store.get_assignments(),
-            rejection_log = deps.store.get_rejection_log(),
-            proposal      = in_flight_proposal,
-            deps          = deps,
+        while cycle < MAX_CYCLES:
+            cycle += 1
+            logger.info(f"[cycle {cycle}] unscheduled: {deps.store.get_unscheduled_courses()}")
+
+            decision = await self._agents["orchestrator"].run(
+                unscheduled   = deps.store.get_unscheduled_courses(),
+                assignments   = deps.store.get_assignments(),
+                rejection_log = deps.store.get_rejection_log(),
+                proposal      = in_flight_proposal,
+                deps          = deps,
+            )
+
+            logger.info(f"[cycle {cycle}] orchestrator → {decision.next_action}: {decision.reason}")
+
+            in_flight_proposal = await self._execute(decision, in_flight_proposal, self._agents, deps, cycle)
+
+            if decision.next_action == "done":
+                break
+
+        # return _produce_output(deps, cycle)
+
+    async def _execute(self,
+        decision: OrchestratorDecision,
+        proposal: Proposal | None,
+        agents: dict,
+        deps: Deps,
+        cycle: int,
+    ) -> Proposal | None:
+        course = (
+            next((c for c in deps.courses if c.id == decision.course_id), None)
+            if decision.course_id else
+            next((c for c in deps.courses if c.id == proposal.course_id), None) if proposal else None
         )
 
-        logger.info(f"[cycle {cycle}] orchestrator → {decision.next_action}: {decision.reason}")
+        match decision.next_action:
+            case "dispatch_course":
+                proposal = Proposal(id=str(uuid.uuid4()), course_id=decision.course_id)
+                return await agents["course"].run(course, deps, decision.failure_context)
 
-        in_flight_proposal = await _execute(decision, in_flight_proposal, agents, deps, cycle)
+            case "dispatch_room":
+                return await agents["room"].run(proposal, course, deps, decision.failure_context)
 
-        if decision.next_action == "done":
-            break
+            case "dispatch_lecturer":
+                return await agents["lecturer"].run(proposal, course, deps, decision.failure_context)
 
-    return _produce_output(deps, cycle)
+            case "dispatch_policy":
+                return await agents["policy"].run(proposal, course, deps)
 
+            case "confirm":
+                deps.store.confirm(proposal, cycle)
+                logger.info(f"[cycle {cycle}] confirmed {proposal.course_id}")
+                return None
 
-async def _execute(
-    decision: OrchestratorDecision,
-    proposal: Proposal | None,
-    agents: dict,
-    deps: Deps,
-    cycle: int,
-) -> Proposal | None:
-    course = (
-        next((c for c in deps.courses if c.id == decision.course_id), None)
-        if decision.course_id else
-        next((c for c in deps.courses if c.id == proposal.course_id), None) if proposal else None
-    )
+            case "abandon":
+                deps.store.record_rejection(decision.course_id, decision.reason, cycle)
+                deps.store.abandon(decision.course_id)
+                logger.warning(f"[cycle {cycle}] abandoned {decision.course_id}: {decision.reason}")
+                return None
 
-    match decision.next_action:
-        case "dispatch_course":
-            proposal = Proposal(id=str(uuid.uuid4()), course_id=decision.course_id)
-            return await agents["course"].run(course, deps, decision.failure_context)
-
-        case "dispatch_room":
-            return await agents["room"].run(proposal, course, deps, decision.failure_context)
-
-        case "dispatch_lecturer":
-            return await agents["lecturer"].run(proposal, course, deps, decision.failure_context)
-
-        case "dispatch_policy":
-            return await agents["policy"].run(proposal, course, deps)
-
-        case "confirm":
-            deps.store.confirm(proposal, cycle)
-            logger.info(f"[cycle {cycle}] confirmed {proposal.course_id}")
-            return None
-
-        case "abandon":
-            deps.store.record_rejection(decision.course_id, decision.reason, cycle)
-            deps.store.abandon(decision.course_id)
-            logger.warning(f"[cycle {cycle}] abandoned {decision.course_id}: {decision.reason}")
-            return None
-
-        case "done":
-            return None
+            case "done":
+                return None
 ```
 
 **Note on `dispatch_course`**: `proposal` is assigned a fresh `Proposal` object before being passed into `CourseAgent.run()`. The agent receives the course and fills in the timeslot, returning an updated `Proposal`. This replaces the previous bug where `new_proposal` was created but never used.
@@ -977,7 +980,7 @@ def load_data() -> tuple[list[Course], list[Room], list[Lecturer], Policy]:
 import asyncio
 import json
 from pydantic_ai import Agent
-from control.orchestrator import run
+from control.coordinator import Coordinator
 from core.data_loader import load_data
 from core.deps import Deps
 from core.logger import logger
@@ -1066,7 +1069,7 @@ Build in this order: `PolicyAgent` → `RoomAgent` → `LecturerAgent` → `Cour
 **Phase 7 — OrchestratorAgent** (`agents/orchestrator_agent.py`)
 Build after all workers are verified. Test by constructing a realistic state snapshot (a few assignments, a rejection or two, an in-flight proposal at various stages) and confirming the returned `OrchestratorDecision.next_action` is correct for each scenario.
 
-**Phase 8 — Control loop** (`control/orchestrator.py`)
+**Phase 8 — Control loop** (`control/coordinator.py`)
 Assemble the full loop. Verify the happy path end-to-end: all four courses should confirm. Then verify failure recovery by temporarily making a constraint impossible (e.g. remove all lab rooms) and confirming the orchestrator abandons after MAX_RETRIES.
 
 **Phase 9 — Integration** (`main.py`)
