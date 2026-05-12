@@ -1,0 +1,6 @@
+[
+    { "id": "R001", "name": "Lecture Theatre 1", "room_type": "classroom" },
+    { "id": "R002", "name": "Lecture Theatre 2", "room_type": "classroom" },
+    { "id": "R003", "name": "Computer Lab A",    "room_type": "lab"       },
+    { "id": "R004", "name": "Computer Lab B",    "room_type": "lab"       }
+  ]

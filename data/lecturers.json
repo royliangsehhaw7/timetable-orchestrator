@@ -1,0 +1,24 @@
+[
+    {
+      "id": "L001",
+      "name": "Dr. Okafor",
+      "courses_taught": ["CS201", "CS101"],
+      "unavailable_slots": [
+        { "day": "Monday", "start_hour": 8, "end_hour": 10 }
+      ]
+    },
+    {
+      "id": "L002",
+      "name": "Prof. Singh",
+      "courses_taught": ["MA101"],
+      "unavailable_slots": []
+    },
+    {
+      "id": "L003",
+      "name": "Dr. Reyes",
+      "courses_taught": ["PH201"],
+      "unavailable_slots": [
+        { "day": "Thursday", "start_hour": 14, "end_hour": 16 }
+      ]
+    }
+  ]

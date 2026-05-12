@@ -1,0 +1,7 @@
+{
+    "school_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "school_start_hour": 8,
+    "school_end_hour": 17,
+    "lunch_start_hour": 12,
+    "lunch_end_hour": 13
+  }

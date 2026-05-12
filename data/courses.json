@@ -1,0 +1,6 @@
+[
+    { "id": "CS201", "name": "Data Structures",             "requires_lab": true  },
+    { "id": "MA101", "name": "Calculus",                    "requires_lab": false },
+    { "id": "CS101", "name": "Introduction to Programming", "requires_lab": true  },
+    { "id": "PH201", "name": "Physics I",                   "requires_lab": false }
+  ]
