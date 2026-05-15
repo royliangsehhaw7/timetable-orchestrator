@@ -39,14 +39,10 @@ class PolicyAgent(BaseAgent):
         return f"""
             Current proposal:
             {json.dumps(proposal.model_dump(), indent=2)}
-
             Course:
             {json.dumps(course.model_dump(), indent=2)}
-
             Room:
             {json.dumps(room.model_dump(), indent=2)}
-
-
             School policy:
             {json.dumps(deps.policy.model_dump(), indent=2)}
         """

@@ -32,10 +32,8 @@ class CourseAgent(BaseAgent):
         return f"""
             Course:
             {json.dumps(course.model_dump(), indent=2)}
-
             School policy:
             {json.dumps(deps.policy.model_dump(), indent=2)}
-
             Already confirmed assignments (timeslots already taken):
             {json.dumps([a.model_dump() for a in assignments], indent=2)}
 

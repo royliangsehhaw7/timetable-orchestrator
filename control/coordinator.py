@@ -35,9 +35,7 @@ class Coordinator():
 
         # return _produce_output(deps, cycle)
 
-    async def _execute(self,
-        decision: OrchestratorDecision,
-        proposal: Proposal | None,
+    async def _execute(self, decision: OrchestratorDecision, proposal: Proposal | None,
         agents: dict,
         deps: Deps,
         cycle: int,
@@ -65,12 +63,14 @@ class Coordinator():
             case "confirm":
                 deps.store.confirm(proposal, cycle)
                 logger.info(f"[cycle {cycle}] confirmed {proposal.course_id}")
+
                 return None
 
             case "abandon":
                 deps.store.record_rejection(decision.course_id, decision.reason, cycle)
                 deps.store.abandon(decision.course_id)
                 logger.warning(f"[cycle {cycle}] abandoned {decision.course_id}: {decision.reason}")
+
                 return None
 
             case "done":

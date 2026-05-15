@@ -34,13 +34,10 @@ class RoomAgent(BaseAgent):
         return f"""
             Current proposal:
             {json.dumps(proposal.model_dump(), indent=2)}
-
             Course:
             {json.dumps(course.model_dump(), indent=2)}
-
             All rooms:
             {json.dumps([r.model_dump() for r in deps.rooms], indent=2)}
-
             Rooms already confirmed at this timeslot:
             {json.dumps([a.model_dump() for a in booked_at_slot], indent=2)}
         """

@@ -417,10 +417,8 @@ class CourseAgent(BaseAgent):
         return f"""
             Course:
             {json.dumps(course.model_dump(), indent=2)}
-
             School policy:
             {json.dumps(deps.policy.model_dump(), indent=2)}
-
             Already confirmed assignments (timeslots already taken):
             {json.dumps([a.model_dump() for a in assignments], indent=2)}
         """
@@ -477,13 +475,10 @@ class RoomAgent(BaseAgent):
         return f"""
             Current proposal:
             {json.dumps(proposal.model_dump(), indent=2)}
-
             Course:
             {json.dumps(course.model_dump(), indent=2)}
-
             All rooms:
             {json.dumps([r.model_dump() for r in deps.rooms], indent=2)}
-
             Rooms already confirmed at this timeslot:
             {json.dumps([a.model_dump() for a in booked_at_slot], indent=2)}
         """
@@ -541,13 +536,10 @@ class LecturerAgent(BaseAgent):
         return f"""
             Current proposal:
             {json.dumps(proposal.model_dump(), indent=2)}
-
             Course:
             {json.dumps(course.model_dump(), indent=2)}
-
             All lecturers (includes courses_taught and unavailable_slots):
             {json.dumps([l.model_dump() for l in deps.lecturers], indent=2)}
-
             Lecturers already confirmed at this timeslot:
             {json.dumps([a.model_dump() for a in booked_at_slot], indent=2)}
         """
@@ -608,16 +600,12 @@ class PolicyAgent(BaseAgent):
         return f"""
             Current proposal:
             {json.dumps(proposal.model_dump(), indent=2)}
-
             Course:
             {json.dumps(course.model_dump(), indent=2)}
-
             Room:
             {json.dumps(room.model_dump(), indent=2)}
-
             Lecturer:
             {json.dumps(lecturer.model_dump(), indent=2)}
-
             School policy:
             {json.dumps(deps.policy.model_dump(), indent=2)}
         """
@@ -686,13 +674,10 @@ class OrchestratorAgent(BaseAgent):
 
             Unscheduled courses:
             {json.dumps(unscheduled, indent=2)}
-
             Confirmed assignments so far:
             {json.dumps([a.model_dump() for a in assignments], indent=2)}
-
             Rejection log (use this to count retries per course):
             {json.dumps([r.model_dump() for r in rejection_log], indent=2)}
-
             Current in-flight proposal (null if no proposal is active):
             {json.dumps(proposal.model_dump() if proposal else None, indent=2)}
         """
@@ -781,27 +766,21 @@ class Coordinator():
             case "dispatch_course":
                 proposal = Proposal(id=str(uuid.uuid4()), course_id=decision.course_id)
                 return await agents["course"].run(course, deps, decision.failure_context)
-
             case "dispatch_room":
                 return await agents["room"].run(proposal, course, deps, decision.failure_context)
-
             case "dispatch_lecturer":
                 return await agents["lecturer"].run(proposal, course, deps, decision.failure_context)
-
             case "dispatch_policy":
                 return await agents["policy"].run(proposal, course, deps)
-
             case "confirm":
                 deps.store.confirm(proposal, cycle)
                 logger.info(f"[cycle {cycle}] confirmed {proposal.course_id}")
                 return None
-
             case "abandon":
                 deps.store.record_rejection(decision.course_id, decision.reason, cycle)
                 deps.store.abandon(decision.course_id)
                 logger.warning(f"[cycle {cycle}] abandoned {decision.course_id}: {decision.reason}")
                 return None
-
             case "done":
                 return None
 ```

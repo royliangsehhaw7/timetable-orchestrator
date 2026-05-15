@@ -41,13 +41,10 @@ class OrchestratorAgent(BaseAgent):
 
             Unscheduled courses:
             {json.dumps(unscheduled, indent=2)}
-
             Confirmed assignments so far:
             {json.dumps([a.model_dump() for a in assignments], indent=2)}
-
             Rejection log (use this to count retries per course):
             {json.dumps([r.model_dump() for r in rejection_log], indent=2)}
-
             Current in-flight proposal (null if no proposal is active):
             {json.dumps(proposal.model_dump() if proposal else None, indent=2)}
         """
